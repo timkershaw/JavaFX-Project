@@ -8,7 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import todolist.datamodel.TodoData;
-import todolist.datamodel.Todoitem;
+import todolist.datamodel.TodoItem;
 
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
@@ -16,10 +16,10 @@ import java.util.List;
 import java.util.Optional;
 
 public class Controller {
-    private List<Todoitem> todoItems;
+    private List<TodoItem> todoItems;
 
     @FXML
-    private ListView<Todoitem> todoListView;
+    private ListView<TodoItem> todoListView;
 
     @FXML
     private TextArea itemDetailsTextArea;
@@ -33,11 +33,11 @@ public class Controller {
     public void initialize() {
 
 
-        todoListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Todoitem>() {
+        todoListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<TodoItem>() {
             @Override
-            public void changed(ObservableValue<? extends Todoitem> observable, Todoitem oldValue, Todoitem newValue) {
+            public void changed(ObservableValue<? extends TodoItem> observable, TodoItem oldValue, TodoItem newValue) {
                 if(newValue != null) {
-                    Todoitem item = todoListView.getSelectionModel().getSelectedItem();
+                    TodoItem item = todoListView.getSelectionModel().getSelectedItem();
                     itemDetailsTextArea.setText(item.getDetails());
                     DateTimeFormatter df = DateTimeFormatter.ofPattern("MMMM d, yyyy");
                     deadlineLabel.setText(df.format(item.getDeadline()));
@@ -74,7 +74,9 @@ public class Controller {
         Optional<ButtonType> result = dialog.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
             DialogController controller = fxmlLoader.getController();
-            controller.processResults();
+            TodoItem newItem = controller.processResults();
+            todoListView.getItems().setAll(TodoData.getInstance().getTodoItems());
+            todoListView.getSelectionModel().select(newItem);
             System.out.println("OK pressed");
         } else {
             System.out.println("Cancel pressed");
@@ -83,7 +85,7 @@ public class Controller {
 
     @FXML
     public void handleClickListView() {
-        Todoitem item = todoListView.getSelectionModel().getSelectedItem();
+        TodoItem item = todoListView.getSelectionModel().getSelectedItem();
         itemDetailsTextArea.setText(item.getDetails());
         deadlineLabel.setText(item.getDeadline().toString());
     }

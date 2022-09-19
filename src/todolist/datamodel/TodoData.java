@@ -17,7 +17,7 @@ public class TodoData {
     private static TodoData instance = new TodoData();
     private static String filename = "TodoListItems.txt";
 
-    private List<Todoitem> todoItems;
+    private List<TodoItem> todoItems;
     private DateTimeFormatter formatter;
 
     public static TodoData getInstance() {
@@ -28,11 +28,11 @@ public class TodoData {
         formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
     }
 
-    public List<Todoitem> getTodoItems() {
+    public List<TodoItem> getTodoItems() {
         return todoItems;
     }
 
-    public void addTodoItem(Todoitem item) {
+    public void addTodoItem(TodoItem item) {
         todoItems.add(item);
     }
 
@@ -53,7 +53,7 @@ public class TodoData {
 
                 // converting date into a readable format
                 LocalDate date = LocalDate.parse(dateString, formatter);
-                Todoitem todoitem = new Todoitem(shortDescription, details, date);
+                TodoItem todoitem = new TodoItem(shortDescription, details, date);
                 todoItems.add(todoitem);
             }
 
@@ -68,9 +68,9 @@ public class TodoData {
         Path path = Paths.get(filename);
         BufferedWriter bw = Files.newBufferedWriter(path);
         try {
-            Iterator<Todoitem> iter = todoItems.iterator();
+            Iterator<TodoItem> iter = todoItems.iterator();
             while (iter.hasNext()) {
-                Todoitem item = iter.next();
+                TodoItem item = iter.next();
                 bw.write(String.format("%s\t%s\t%s",
                         item.getShortDescription(),
                         item.getDetails(),

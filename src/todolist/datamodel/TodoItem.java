@@ -2,17 +2,17 @@ package todolist.datamodel;
 
 import java.time.LocalDate;
 
-public class Todoitem {
+public class TodoItem {
     // description that appears in the listview
     private String shortDescription;
 
     // extended description
     private String details;
 
-    // due date
+    // due dategithub
     private LocalDate deadline;
 
-    public Todoitem(String shortDescription, String details, LocalDate deadline) {
+    public TodoItem(String shortDescription, String details, LocalDate deadline) {
         this.shortDescription = shortDescription;
         this.details = details;
         this.deadline = deadline;
