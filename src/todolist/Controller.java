@@ -45,7 +45,7 @@ public class Controller {
             }
         });
 
-        todoListView.getItems().setAll(TodoData.getInstance().getTodoItems());
+        todoListView.setItems(TodoData.getInstance().getTodoItems());
         // set selection to single
         todoListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         // will automatically select the first item in the todo list
@@ -77,11 +77,7 @@ public class Controller {
         if (result.isPresent() && result.get() == ButtonType.OK) {
             DialogController controller = fxmlLoader.getController();
             TodoItem newItem = controller.processResults();
-            todoListView.getItems().setAll(TodoData.getInstance().getTodoItems());
             todoListView.getSelectionModel().select(newItem);
-            System.out.println("OK pressed");
-        } else {
-            System.out.println("Cancel pressed");
         }
     }
 
