@@ -64,6 +64,10 @@ public class TodoData {
         }
     }
 
+    public void deleteTodoItem(TodoItem item) {
+        todoItems.remove(item);
+    }
+
     public void storeTodoItems() throws IOException {
         Path path = Paths.get(filename);
         BufferedWriter bw = Files.newBufferedWriter(path);
